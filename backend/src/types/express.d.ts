@@ -1,5 +1,3 @@
-import { UserRecord } from '../repositories/UserRepository.js';
-
 export interface AuthUser {
   id: string;
   email: string;
