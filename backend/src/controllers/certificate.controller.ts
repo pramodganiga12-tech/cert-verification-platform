@@ -1,0 +1,89 @@
+import { Request, Response, NextFunction } from 'express';
+import { CertificateService } from '../services/certificate.service.js';
+import { ApiResponse } from '../utils/apiResponse.js';
+import { ForbiddenError, BadRequestError } from '../errors/AppError.js';
+
+export class CertificateController {
+  static async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const institutionId = req.user?.roleName === 'INSTITUTION' ? req.user.institutionId! : req.body.institutionId;
+      if (!institutionId) {
+        throw new BadRequestError('Institution ID is required');
+      }
+
+      const cert = await CertificateService.createCertificate({ ...req.body, institutionId }, req.user?.id);
+      ApiResponse.success(res, cert, 'Certificate created and pinned to IPFS successfully', 201);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
+      const cert = await CertificateService.getCertificateById(id);
+
+      // Access control check for Institution and Student roles
+      if (req.user?.roleName === 'INSTITUTION' && cert.institution_id !== req.user.institutionId) {
+        throw new ForbiddenError('Access denied to certificates of other institutions');
+      }
+
+      ApiResponse.success(res, cert, 'Certificate retrieved successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async list(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const limit = parseInt(req.query.limit as string || '50', 10);
+      const offset = parseInt(req.query.offset as string || '0', 10);
+      let list = await CertificateService.listCertificates(limit, offset);
+
+      if (req.user?.roleName === 'INSTITUTION') {
+        list = list.filter((c) => c.institution_id === req.user!.institutionId);
+      }
+
+      ApiResponse.success(res, list, 'Certificates listed successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async revoke(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
+      const { reason } = req.body;
+      const cert = await CertificateService.getCertificateById(id);
+
+      if (req.user?.roleName === 'INSTITUTION' && cert.institution_id !== req.user.institutionId) {
+        throw new ForbiddenError('You can only revoke certificates issued by your institution');
+      }
+
+      const revoked = await CertificateService.revokeCertificate(id, reason, req.user?.id);
+      ApiResponse.success(res, revoked, 'Certificate revoked successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async listByStudent(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { studentId } = req.params;
+      const list = await CertificateService.listByStudent(studentId);
+      ApiResponse.success(res, list, 'Student certificates retrieved successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async listByInstitution(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { institutionId } = req.params;
+      const list = await CertificateService.listByInstitution(institutionId);
+      ApiResponse.success(res, list, 'Institution certificates retrieved successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+}
