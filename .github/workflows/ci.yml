@@ -1,0 +1,32 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Root & Submodule Dependencies
+        run: npm run install:all
+
+      - name: TypeScript Verification
+        run: npm run typecheck
+
+      - name: Lint Verification
+        run: npm run lint
+
+      - name: Build All Modules
+        run: npm run build

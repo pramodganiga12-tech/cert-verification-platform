@@ -1,0 +1,28 @@
+graph TD
+    subgraph Frontend Components
+        RTR[React Router]
+        ZUST[Zustand Auth & App State]
+        RQ[React Query API Cache]
+        PAGES[Role Dashboards & Public Verification Page]
+    end
+
+    subgraph Backend Modules
+        CTRL[Controllers: Auth, Inst, Cert, Verify]
+        SVC[Services: CertEngine, IPFS, Blockchain, Crypto]
+        REPO[Repository / Data Access Layer]
+    end
+
+    subgraph External Interfaces
+        CONTRACT_ETH[Ethers.js Contract Wrapper]
+        IPFS_CLIENT[IPFS HTTP Client]
+        SQLITE_CLIENT[SQLite Database Connection]
+    end
+
+    PAGES --> ZUST
+    PAGES --> RQ
+    RQ --> CTRL
+    CTRL --> SVC
+    SVC --> REPO
+    SVC --> CONTRACT_ETH
+    SVC --> IPFS_CLIENT
+    REPO --> SQLITE_CLIENT

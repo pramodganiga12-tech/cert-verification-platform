@@ -1,0 +1,39 @@
+{
+  "name": "blockchain-certificate-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blockchain-Based Academic Certificate Verification & Digital Credential Management Platform",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend && npm install --prefix blockchain",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "build:blockchain": "npm run build --prefix blockchain",
+    "build": "npm run build:backend && npm run build:frontend && npm run build:blockchain",
+    "typecheck:backend": "npm run typecheck --prefix backend",
+    "typecheck:frontend": "npm run typecheck --prefix frontend",
+    "typecheck:blockchain": "npm run typecheck --prefix blockchain",
+    "typecheck": "npm run typecheck:backend && npm run typecheck:frontend && npm run typecheck:blockchain",
+    "lint:backend": "npm run lint --prefix backend",
+    "lint:frontend": "npm run lint --prefix frontend",
+    "lint:blockchain": "npm run lint --prefix blockchain",
+    "lint": "npm run lint:backend && npm run lint:frontend && npm run lint:blockchain",
+    "test:backend": "npm run test --prefix backend",
+    "test:blockchain": "npm run test --prefix blockchain",
+    "test": "npm run test:backend && npm run test:blockchain"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "solidity",
+    "academic-certificates",
+    "verification",
+    "ipfs",
+    "react",
+    "typescript",
+    "sqlite"
+  ],
+  "author": "Engineering Team",
+  "license": "MIT"
+}

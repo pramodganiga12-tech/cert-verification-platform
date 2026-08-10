@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor Inst as Institution User
+    participant App as Backend API Server
+    participant Hash as Hashing Engine (Keccak/SHA)
+    participant PDF as PDF & QR Generator
+    participant Enc as AES-256-GCM Encryptor
+    participant IPFS as Local IPFS Node
+    participant BC as Smart Contract (Ganache)
+    participant DB as SQLite DB
+
+    Inst->>App: Submit Certificate Issuance Request
+    App->>Hash: Generate Canonical Payload & Primary Verification Hash
+    App->>PDF: Render Visual PDF Certificate with QR reference
+    App->>Enc: Encrypt Certificate PDF artifact via AES-256-GCM
+    App->>IPFS: Upload Encrypted Artifact to Local IPFS
+    IPFS-->>App: Return IPFS CID
+    App->>BC: Invoke issueCertificate(certIdHash, certHash, ipfsCid)
+    BC-->>App: Return Transaction Hash & Block Number
+    App->>DB: Save Certificate Record, CID, Hash, & Transaction log
+    App-->>Inst: Return Final Verified Digital Certificate

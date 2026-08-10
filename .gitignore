@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing & Coverage
+coverage/
+*.lcov
+
+# Production & Build outputs
+dist/
+build/
+out/
+
+# Local database & Storage
+database/*.sqlite
+database/*.sqlite-journal
+*.db
+uploads/
+ipfs-data/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Hardhat artifacts
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/

@@ -1,0 +1,22 @@
+flowchart TD
+    A[Verifier inputs Cert ID / Scans QR / Uploads PDF] --> B{Input Type?}
+    
+    B -- Cert ID / QR --> C[Query Database & Smart Contract]
+    B -- Uploaded PDF --> D[Extract / Re-calculate Canonical Verification Hash]
+    
+    D --> C
+    
+    C --> E{Record Exists on Blockchain?}
+    E -- No --> F[Result: NOT FOUND]
+    E -- Yes --> G{Is Certificate Revoked?}
+    
+    G -- Yes --> H[Result: REVOKED]
+    G -- No --> I{Calculated Hash matches On-Chain Hash?}
+    
+    I -- No --> J[Result: TAMPERED]
+    I -- Yes --> K[Result: VERIFIED]
+    
+    F --> L[Log Verification Result in Audit Log]
+    H --> L
+    J --> L
+    K --> L

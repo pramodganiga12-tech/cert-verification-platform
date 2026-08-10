@@ -1,0 +1,36 @@
+graph TB
+    subgraph Client Layer
+        U1[Admin / Institution / Student]
+        U2[Public Verifier / Guest]
+        FE[React + TypeScript + Vite Frontend App]
+    end
+
+    subgraph Application & Gateway Layer
+        API[Express TypeScript API Server]
+        AUTH[JWT & RBAC Middleware]
+        SEC[AES-256-GCM Encryption Engine]
+        PDF[PDF & QR Generator]
+        HASH[SHA-256 / Keccak-256 Hasher]
+    end
+
+    subgraph Data & Storage Layer
+        DB[(SQLite Local Database)]
+        IPFS[(Local IPFS Node)]
+    end
+
+    subgraph Blockchain & Consensus Layer
+        HARDHAT[Ethereum Local Node / Ganache]
+        SC[AcademicCertificate Smart Contract]
+    end
+
+    U1 --> FE
+    U2 --> FE
+    FE --> API
+    API --> AUTH
+    API --> SEC
+    API --> PDF
+    API --> HASH
+    API --> DB
+    API --> IPFS
+    API --> HARDHAT
+    HARDHAT --> SC
