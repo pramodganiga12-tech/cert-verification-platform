@@ -159,12 +159,13 @@ export class StudentService {
         );
         result.successCount++;
         result.insertedStudents.push(student);
-      } catch (err: any) {
+      } catch (err: unknown) {
+        const errMsg = err instanceof Error ? err.message : 'Import error';
         result.failureCount++;
         result.errors.push({
           row: rowNumber,
           identifier: studentIdentifier,
-          error: err.message || 'Import error',
+          error: errMsg,
         });
       }
     }

@@ -9,6 +9,7 @@ import { ApiSuccessPayload } from '../utils/apiResponse.js';
 import { InstitutionRecord } from '../repositories/InstitutionRepository.js';
 import { StudentRecord } from '../repositories/StudentRepository.js';
 import { BulkImportResult } from '../services/student.service.js';
+import { LoginResult } from '../services/auth.service.js';
 
 describe('Institution & Student Management API Unit Tests', () => {
   let server: http.Server;
@@ -36,7 +37,7 @@ describe('Institution & Student Management API Unit Tests', () => {
       body: JSON.stringify({ email: 'admin@platform.local', password: 'Admin@123456' }),
     });
 
-    const loginBody = (await loginRes.json()) as any;
+    const loginBody = (await loginRes.json()) as ApiSuccessPayload<LoginResult>;
     assert.strictEqual(loginRes.status, 200);
     adminToken = loginBody.data.accessToken;
     assert.ok(adminToken);
