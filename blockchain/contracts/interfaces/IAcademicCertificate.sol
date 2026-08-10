@@ -35,9 +35,12 @@ interface IAcademicCertificate {
     error EmptyIpfsCid();
     error EmptyRevocationReason();
     error ZeroHashNotAllowed();
+    error BatchArrayLengthMismatch(uint256 hashesLength, uint256 cidsOrReasonsLength);
 
     function issueCertificate(bytes32 canonicalHash, string calldata ipfsCid) external;
+    function batchIssueCertificates(bytes32[] calldata canonicalHashes, string[] calldata ipfsCids) external;
     function revokeCertificate(bytes32 canonicalHash, string calldata reason) external;
+    function batchRevokeCertificates(bytes32[] calldata canonicalHashes, string[] calldata reasons) external;
     function verifyCertificate(bytes32 canonicalHash) external view returns (bool isValid, bool isRevoked, string memory ipfsCid, address issuer, uint256 issueTimestamp);
     function getCertificate(bytes32 canonicalHash) external view returns (CertificateRecord memory);
     function totalCertificatesCount() external view returns (uint256);

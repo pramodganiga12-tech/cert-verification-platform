@@ -36,31 +36,35 @@ contract AcademicCertificate is IAcademicCertificate, AccessControl, Pausable, R
      * @param ipfsCid IPFS CID where full JSON metadata is stored
      */
     function issueCertificate(bytes32 canonicalHash, string calldata ipfsCid)
+        public
+        override
+        onlyRole(ISSUER_ROLE)
+        whenNotPaused
+        nonReentrant
+    {
+        _issueSingle(canonicalHash, ipfsCid);
+    }
+
+    /**
+     * @notice Batch issue multiple certificates in a single atomic transaction
+     * @param canonicalHashes Array of SHA-256 canonical hashes
+     * @param ipfsCids Array of corresponding IPFS CIDs
+     */
+    function batchIssueCertificates(bytes32[] calldata canonicalHashes, string[] calldata ipfsCids)
         external
         override
         onlyRole(ISSUER_ROLE)
         whenNotPaused
         nonReentrant
     {
-        if (canonicalHash == bytes32(0)) revert ZeroHashNotAllowed();
-        if (bytes(ipfsCid).length == 0) revert EmptyIpfsCid();
-        if (_certificates[canonicalHash].issueTimestamp != 0) {
-            revert CertificateAlreadyExists(canonicalHash);
+        if (canonicalHashes.length != ipfsCids.length) {
+            revert BatchArrayLengthMismatch(canonicalHashes.length, ipfsCids.length);
         }
 
-        CertificateRecord memory cert = CertificateRecord({
-            canonicalHash: canonicalHash,
-            ipfsCid: ipfsCid,
-            issuer: msg.sender,
-            issueTimestamp: block.timestamp,
-            isRevoked: false,
-            revocationReason: ""
-        });
-
-        _certificates[canonicalHash] = cert;
-        _certificateHashes.push(canonicalHash);
-
-        emit CertificateIssued(canonicalHash, ipfsCid, msg.sender, block.timestamp);
+        uint256 len = canonicalHashes.length;
+        for (uint256 i = 0; i < len; ++i) {
+            _issueSingle(canonicalHashes[i], ipfsCids[i]);
+        }
     }
 
     /**
@@ -69,25 +73,35 @@ contract AcademicCertificate is IAcademicCertificate, AccessControl, Pausable, R
      * @param reason Human-readable revocation rationale
      */
     function revokeCertificate(bytes32 canonicalHash, string calldata reason)
+        public
+        override
+        onlyRole(REVOKER_ROLE)
+        whenNotPaused
+        nonReentrant
+    {
+        _revokeSingle(canonicalHash, reason);
+    }
+
+    /**
+     * @notice Batch revoke multiple certificates in a single transaction
+     * @param canonicalHashes Array of SHA-256 canonical hashes
+     * @param reasons Array of revocation reasons
+     */
+    function batchRevokeCertificates(bytes32[] calldata canonicalHashes, string[] calldata reasons)
         external
         override
         onlyRole(REVOKER_ROLE)
         whenNotPaused
         nonReentrant
     {
-        if (canonicalHash == bytes32(0)) revert ZeroHashNotAllowed();
-        if (bytes(reason).length == 0) revert EmptyRevocationReason();
-        if (_certificates[canonicalHash].issueTimestamp == 0) {
-            revert CertificateNotFound(canonicalHash);
-        }
-        if (_certificates[canonicalHash].isRevoked) {
-            revert CertificateAlreadyRevoked(canonicalHash);
+        if (canonicalHashes.length != reasons.length) {
+            revert BatchArrayLengthMismatch(canonicalHashes.length, reasons.length);
         }
 
-        _certificates[canonicalHash].isRevoked = true;
-        _certificates[canonicalHash].revocationReason = reason;
-
-        emit CertificateRevoked(canonicalHash, msg.sender, reason, block.timestamp);
+        uint256 len = canonicalHashes.length;
+        for (uint256 i = 0; i < len; ++i) {
+            _revokeSingle(canonicalHashes[i], reasons[i]);
+        }
     }
 
     /**
@@ -154,5 +168,42 @@ contract AcademicCertificate is IAcademicCertificate, AccessControl, Pausable, R
      */
     function unpause() external onlyRole(PAUSER_ROLE) {
         _unpause();
+    }
+
+    // Internal Helpers
+    function _issueSingle(bytes32 canonicalHash, string calldata ipfsCid) private {
+        if (canonicalHash == bytes32(0)) revert ZeroHashNotAllowed();
+        if (bytes(ipfsCid).length == 0) revert EmptyIpfsCid();
+        if (_certificates[canonicalHash].issueTimestamp != 0) {
+            revert CertificateAlreadyExists(canonicalHash);
+        }
+
+        _certificates[canonicalHash] = CertificateRecord({
+            canonicalHash: canonicalHash,
+            ipfsCid: ipfsCid,
+            issuer: msg.sender,
+            issueTimestamp: block.timestamp,
+            isRevoked: false,
+            revocationReason: ""
+        });
+        _certificateHashes.push(canonicalHash);
+
+        emit CertificateIssued(canonicalHash, ipfsCid, msg.sender, block.timestamp);
+    }
+
+    function _revokeSingle(bytes32 canonicalHash, string calldata reason) private {
+        if (canonicalHash == bytes32(0)) revert ZeroHashNotAllowed();
+        if (bytes(reason).length == 0) revert EmptyRevocationReason();
+        if (_certificates[canonicalHash].issueTimestamp == 0) {
+            revert CertificateNotFound(canonicalHash);
+        }
+        if (_certificates[canonicalHash].isRevoked) {
+            revert CertificateAlreadyRevoked(canonicalHash);
+        }
+
+        _certificates[canonicalHash].isRevoked = true;
+        _certificates[canonicalHash].revocationReason = reason;
+
+        emit CertificateRevoked(canonicalHash, msg.sender, reason, block.timestamp);
     }
 }
