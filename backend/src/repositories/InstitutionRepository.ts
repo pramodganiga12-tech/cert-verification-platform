@@ -36,6 +36,32 @@ export class InstitutionRepository {
     return created!;
   }
 
+  static async update(id: string, updates: { name?: string; address?: string | null; wallet_address?: string | null }): Promise<InstitutionRecord> {
+    const db = await getDb();
+    db.prepare(`
+      UPDATE institutions
+      SET name = COALESCE(?, name),
+          address = COALESCE(?, address),
+          wallet_address = COALESCE(?, wallet_address),
+          updated_at = datetime('now')
+      WHERE id = ?
+    `).run(updates.name || null, updates.address !== undefined ? updates.address : null, updates.wallet_address !== undefined ? updates.wallet_address : null, id);
+    const updated = await this.findById(id);
+    return updated!;
+  }
+
+  static async updateStatus(id: string, status: InstitutionRecord['status']): Promise<InstitutionRecord> {
+    const db = await getDb();
+    db.prepare(`
+      UPDATE institutions
+      SET status = ?,
+          updated_at = datetime('now')
+      WHERE id = ?
+    `).run(status, id);
+    const updated = await this.findById(id);
+    return updated!;
+  }
+
   static async listAll(limit = 50, offset = 0): Promise<InstitutionRecord[]> {
     const db = await getDb();
     return db.prepare('SELECT * FROM institutions ORDER BY created_at DESC LIMIT ? OFFSET ?').all<InstitutionRecord>(limit, offset);

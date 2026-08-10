@@ -37,6 +37,21 @@ export class StudentRepository {
     return created!;
   }
 
+  static async update(id: string, updates: { first_name?: string; last_name?: string; email?: string; dob?: string | null }): Promise<StudentRecord> {
+    const db = await getDb();
+    db.prepare(`
+      UPDATE students
+      SET first_name = COALESCE(?, first_name),
+          last_name = COALESCE(?, last_name),
+          email = COALESCE(?, email),
+          dob = COALESCE(?, dob),
+          updated_at = datetime('now')
+      WHERE id = ?
+    `).run(updates.first_name || null, updates.last_name || null, updates.email || null, updates.dob !== undefined ? updates.dob : null, id);
+    const updated = await this.findById(id);
+    return updated!;
+  }
+
   static async listByInstitution(institution_id: string, limit = 50, offset = 0): Promise<StudentRecord[]> {
     const db = await getDb();
     return db.prepare('SELECT * FROM students WHERE institution_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?').all<StudentRecord>(institution_id, limit, offset);
