@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx"
+    "dev": "npx --no-install vite",
+    "build": "npx --no-install tsc && npx --no-install vite build",
+    "preview": "npx --no-install vite preview",
+    "typecheck": "npx --no-install tsc --noEmit",
+    "lint": "npx --no-install eslint src --ext .ts,.tsx"
   },
   "dependencies": {
     "clsx": "^2.1.0",

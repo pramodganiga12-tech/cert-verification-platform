@@ -19,9 +19,24 @@
     "lint:frontend": "npm run lint --prefix frontend",
     "lint:blockchain": "npm run lint --prefix blockchain",
     "lint": "npm run lint:backend && npm run lint:frontend && npm run lint:blockchain",
+    "db:migrate": "npm run db:migrate --prefix backend",
+    "db:seed": "npm run db:seed --prefix backend",
+    "db:setup": "npm run db:setup --prefix backend",
+    "test:db": "npm run test --prefix backend",
     "test:backend": "npm run test --prefix backend",
     "test:blockchain": "npm run test --prefix blockchain",
     "test": "npm run test:backend && npm run test:blockchain"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "sql.js": "^1.10.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "hardhat": "^2.22.3",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
   },
   "keywords": [
     "blockchain",

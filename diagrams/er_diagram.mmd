@@ -1,0 +1,16 @@
+erDiagram
+    roles ||--o{ users : assigns
+    roles ||--o{ role_permissions : defines
+    permissions ||--o{ role_permissions : grants
+    institutions ||--o{ users : employs
+    institutions ||--o{ students : enrolls
+    institutions ||--o{ certificates : issues
+    users ||--o| students : associated_with
+    users ||--o{ sessions : authenticates
+    users ||--o{ refresh_tokens : owns
+    users ||--o{ notifications : receives
+    users ||--o{ audit_logs : performs
+    students ||--o{ certificates : holds
+    certificates ||--o{ certificate_versions : versioned_in
+    certificates ||--o{ blockchain_transactions : anchored_by
+    certificates ||--o{ verification_logs : logged_in

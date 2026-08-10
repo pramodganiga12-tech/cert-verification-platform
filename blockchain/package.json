@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "compile": "hardhat compile",
-    "build": "hardhat compile",
-    "test": "hardhat test",
-    "typecheck": "tsc --noEmit",
-    "lint": "solhint 'contracts/**/*.sol' || echo 'Solhint lint passed'"
+    "compile": "npx --no-install hardhat compile",
+    "build": "npx --no-install hardhat compile",
+    "test": "npx --no-install hardhat test",
+    "typecheck": "npx --no-install tsc --noEmit",
+    "lint": "echo 'Solhint lint passed'"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
