@@ -19,12 +19,12 @@ export class AuditLogRepository {
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
     stmt.run(log.id, log.user_id || null, log.action, log.entity_type, log.entity_id || null, log.ip_address || null, log.details || null);
-    const row = db.prepare('SELECT * FROM audit_logs WHERE id = ?').get(log.id) as AuditLogRecord;
-    return row;
+    const row = db.prepare('SELECT * FROM audit_logs WHERE id = ?').get<AuditLogRecord>(log.id);
+    return row!;
   }
 
   static async listAll(limit = 50, offset = 0): Promise<AuditLogRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ? OFFSET ?').all(limit, offset) as AuditLogRecord[];
+    return db.prepare('SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ? OFFSET ?').all<AuditLogRecord>(limit, offset);
   }
 }

@@ -10,7 +10,7 @@ export interface SystemSettingRecord {
 export class SystemSettingsRepository {
   static async get(key: string): Promise<string | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT value FROM system_settings WHERE key = ?').get(key) as { value: string } | undefined;
+    const row = db.prepare('SELECT value FROM system_settings WHERE key = ?').get<{ value: string }>(key);
     return row ? row.value : null;
   }
 
@@ -26,6 +26,6 @@ export class SystemSettingsRepository {
 
   static async listAll(): Promise<SystemSettingRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM system_settings ORDER BY key ASC').all() as SystemSettingRecord[];
+    return db.prepare('SELECT * FROM system_settings ORDER BY key ASC').all<SystemSettingRecord>();
   }
 }

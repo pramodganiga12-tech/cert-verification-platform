@@ -21,12 +21,12 @@ export class VerificationLogRepository {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     stmt.run(log.id, log.certificate_id || null, log.verification_method, log.result_status, log.input_identifier || null, log.verified_by_user_id || null, log.ip_address || null, log.user_agent || null, log.details || null);
-    const row = db.prepare('SELECT * FROM verification_logs WHERE id = ?').get(log.id) as VerificationLogRecord;
-    return row;
+    const row = db.prepare('SELECT * FROM verification_logs WHERE id = ?').get<VerificationLogRecord>(log.id);
+    return row!;
   }
 
   static async listAll(limit = 50, offset = 0): Promise<VerificationLogRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM verification_logs ORDER BY created_at DESC LIMIT ? OFFSET ?').all(limit, offset) as VerificationLogRecord[];
+    return db.prepare('SELECT * FROM verification_logs ORDER BY created_at DESC LIMIT ? OFFSET ?').all<VerificationLogRecord>(limit, offset);
   }
 }

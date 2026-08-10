@@ -18,13 +18,13 @@ export class NotificationRepository {
       VALUES (?, ?, ?, ?, ?, 0)
     `);
     stmt.run(n.id, n.user_id, n.title, n.message, n.type || 'INFO');
-    const row = db.prepare('SELECT * FROM notifications WHERE id = ?').get(n.id) as NotificationRecord;
-    return row;
+    const row = db.prepare('SELECT * FROM notifications WHERE id = ?').get<NotificationRecord>(n.id);
+    return row!;
   }
 
   static async listByUser(user_id: string, limit = 20): Promise<NotificationRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT ?').all(user_id, limit) as NotificationRecord[];
+    return db.prepare('SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT ?').all<NotificationRecord>(user_id, limit);
   }
 
   static async markAsRead(id: string): Promise<boolean> {

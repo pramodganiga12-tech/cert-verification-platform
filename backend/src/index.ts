@@ -1,44 +1,78 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
-import path from 'path';
-
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+import { Server } from 'http';
+import { env } from './config/env.js';
+import { requestLoggerMiddleware } from './middleware/logger.middleware.js';
+import { defaultRateLimiter } from './middleware/rateLimiter.middleware.js';
+import { errorHandlerMiddleware } from './middleware/errorHandler.middleware.js';
+import { NotFoundError } from './errors/AppError.js';
+import apiRouter from './routes/index.js';
+import { Logger } from './utils/logger.js';
+import { closeDb, initDatabaseInstance } from './config/database.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
+// Security & Parsing Middleware
 app.use(helmet());
-app.use(cors());
-app.use(express.json());
+app.use(cors({ origin: true, credentials: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// API Health Check Endpoint
-app.get('/api/health', (_req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'Blockchain Certificate Verification Platform API is healthy',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
+// Logging & Rate Limiting
+app.use(requestLoggerMiddleware);
+app.use(defaultRateLimiter);
+
+// API Routing
+app.use(env.API_PREFIX, apiRouter);
+
+// 404 Handler
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  next(new NotFoundError(`Cannot ${req.method} ${req.originalUrl}`));
 });
 
-// API Version Endpoint
-app.get('/api/version', (_req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'success',
-    version: '1.0.0',
-    service: 'Academic Certificate Backend Service',
-    nodeVersion: process.version
-  });
-});
+// Centralized Error Handler
+app.use(errorHandlerMiddleware);
 
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    console.log(`[Backend] Server listening on port ${PORT}`);
-    console.log(`[Backend] Health check: http://localhost:${PORT}/api/health`);
-    console.log(`[Backend] Version check: http://localhost:${PORT}/api/version`);
+let server: Server | null = null;
+
+export async function startServer(port = env.PORT): Promise<Server> {
+  await initDatabaseInstance();
+  return new Promise((resolve) => {
+    server = app.listen(port, () => {
+      Logger.info(`[Server] Express listening on port ${port} in ${env.NODE_ENV} mode`);
+      Logger.info(`[Server] Health check: http://localhost:${port}${env.API_PREFIX}/health`);
+      Logger.info(`[Server] Version check: http://localhost:${port}${env.API_PREFIX}/version`);
+      resolve(server!);
+    });
   });
 }
+
+// Auto-start server only if directly executed and not in test environment
+if (process.env.NODE_ENV !== 'test' && require.main === module) {
+  startServer().catch((err) => {
+    Logger.error('[Server] Failed to initialize database or start server:', err);
+    process.exit(1);
+  });
+}
+
+// Graceful Shutdown
+const handleShutdown = (signal: string) => {
+  Logger.info(`[Server] Received ${signal}. Starting graceful shutdown...`);
+  if (server) {
+    server.close(() => {
+      Logger.info('[Server] HTTP server closed.');
+      closeDb();
+      Logger.info('[Server] Database connections closed. Process exiting.');
+      process.exit(0);
+    });
+  } else {
+    closeDb();
+    process.exit(0);
+  }
+};
+
+process.on('SIGTERM', () => handleShutdown('SIGTERM'));
+process.on('SIGINT', () => handleShutdown('SIGINT'));
 
 export default app;

@@ -47,9 +47,9 @@ export async function initDatabaseInstance(): Promise<SqlJsDatabase> {
 }
 
 export interface StatementWrapper {
-  get(...params: any[]): any;
-  all(...params: any[]): any[];
-  run(...params: any[]): { changes: number };
+  get<T = Record<string, unknown>>(...params: unknown[]): T | undefined;
+  all<T = Record<string, unknown>>(...params: unknown[]): T[];
+  run(...params: unknown[]): { changes: number };
 }
 
 export interface DbWrapper {
@@ -62,34 +62,34 @@ export function getDbWrapper(rawDb: SqlJsDatabase): DbWrapper {
   return {
     prepare(sql: string): StatementWrapper {
       return {
-        get(...params: any[]): any {
+        get<T = Record<string, unknown>>(...params: unknown[]): T | undefined {
           const stmt = rawDb.prepare(sql);
           try {
-            stmt.bind(params);
+            stmt.bind(params as (string | number | null | Uint8Array)[]);
             if (stmt.step()) {
               const row = stmt.getAsObject();
-              return row;
+              return row as unknown as T;
             }
             return undefined;
           } finally {
             stmt.free();
           }
         },
-        all(...params: any[]): any[] {
+        all<T = Record<string, unknown>>(...params: unknown[]): T[] {
           const stmt = rawDb.prepare(sql);
-          const results: any[] = [];
+          const results: T[] = [];
           try {
-            stmt.bind(params);
+            stmt.bind(params as (string | number | null | Uint8Array)[]);
             while (stmt.step()) {
-              results.push(stmt.getAsObject());
+              results.push(stmt.getAsObject() as unknown as T);
             }
             return results;
           } finally {
             stmt.free();
           }
         },
-        run(...params: any[]): { changes: number } {
-          rawDb.run(sql, params);
+        run(...params: unknown[]): { changes: number } {
+          rawDb.run(sql, params as (string | number | null | Uint8Array)[]);
           const changes = rawDb.getRowsModified();
           saveDb();
           return { changes };
@@ -106,8 +106,6 @@ export function getDbWrapper(rawDb: SqlJsDatabase): DbWrapper {
     }
   };
 }
-
-let dbWrapperInstance: DbWrapper | null = null;
 
 export async function getDb(): Promise<DbWrapper> {
   const rawDb = await initDatabaseInstance();

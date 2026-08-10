@@ -15,13 +15,13 @@ export interface UserRecord {
 export class UserRepository {
   static async findById(id: string): Promise<UserRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM users WHERE id = ?').get(id) as UserRecord | undefined;
+    const row = db.prepare('SELECT * FROM users WHERE id = ?').get<UserRecord>(id);
     return row || null;
   }
 
   static async findByEmail(email: string): Promise<UserRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as UserRecord | undefined;
+    const row = db.prepare('SELECT * FROM users WHERE email = ?').get<UserRecord>(email);
     return row || null;
   }
 
@@ -44,6 +44,6 @@ export class UserRepository {
 
   static async listAll(limit = 50, offset = 0): Promise<UserRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?').all(limit, offset) as UserRecord[];
+    return db.prepare('SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?').all<UserRecord>(limit, offset);
   }
 }

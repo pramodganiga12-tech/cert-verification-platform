@@ -18,13 +18,13 @@ export interface BlockchainTxRecord {
 export class BlockchainTxRepository {
   static async findById(id: string): Promise<BlockchainTxRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM blockchain_transactions WHERE id = ?').get(id) as BlockchainTxRecord | undefined;
+    const row = db.prepare('SELECT * FROM blockchain_transactions WHERE id = ?').get<BlockchainTxRecord>(id);
     return row || null;
   }
 
   static async findByTxHash(tx_hash: string): Promise<BlockchainTxRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM blockchain_transactions WHERE tx_hash = ?').get(tx_hash) as BlockchainTxRecord | undefined;
+    const row = db.prepare('SELECT * FROM blockchain_transactions WHERE tx_hash = ?').get<BlockchainTxRecord>(tx_hash);
     return row || null;
   }
 

@@ -22,19 +22,19 @@ export interface CertificateRecord {
 export class CertificateRepository {
   static async findById(id: string): Promise<CertificateRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM certificates WHERE id = ?').get(id) as CertificateRecord | undefined;
+    const row = db.prepare('SELECT * FROM certificates WHERE id = ?').get<CertificateRecord>(id);
     return row || null;
   }
 
   static async findByNumber(certificate_number: string): Promise<CertificateRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM certificates WHERE certificate_number = ?').get(certificate_number) as CertificateRecord | undefined;
+    const row = db.prepare('SELECT * FROM certificates WHERE certificate_number = ?').get<CertificateRecord>(certificate_number);
     return row || null;
   }
 
   static async findByCanonicalHash(canonical_hash: string): Promise<CertificateRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM certificates WHERE canonical_hash = ?').get(canonical_hash) as CertificateRecord | undefined;
+    const row = db.prepare('SELECT * FROM certificates WHERE canonical_hash = ?').get<CertificateRecord>(canonical_hash);
     return row || null;
   }
 
@@ -61,6 +61,6 @@ export class CertificateRepository {
 
   static async listAll(limit = 50, offset = 0): Promise<CertificateRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM certificates ORDER BY created_at DESC LIMIT ? OFFSET ?').all(limit, offset) as CertificateRecord[];
+    return db.prepare('SELECT * FROM certificates ORDER BY created_at DESC LIMIT ? OFFSET ?').all<CertificateRecord>(limit, offset);
   }
 }

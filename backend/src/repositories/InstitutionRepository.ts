@@ -15,13 +15,13 @@ export interface InstitutionRecord {
 export class InstitutionRepository {
   static async findById(id: string): Promise<InstitutionRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM institutions WHERE id = ?').get(id) as InstitutionRecord | undefined;
+    const row = db.prepare('SELECT * FROM institutions WHERE id = ?').get<InstitutionRecord>(id);
     return row || null;
   }
 
   static async findByCode(code: string): Promise<InstitutionRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM institutions WHERE code = ?').get(code) as InstitutionRecord | undefined;
+    const row = db.prepare('SELECT * FROM institutions WHERE code = ?').get<InstitutionRecord>(code);
     return row || null;
   }
 
@@ -38,6 +38,6 @@ export class InstitutionRepository {
 
   static async listAll(limit = 50, offset = 0): Promise<InstitutionRecord[]> {
     const db = await getDb();
-    return db.prepare('SELECT * FROM institutions ORDER BY created_at DESC LIMIT ? OFFSET ?').all(limit, offset) as InstitutionRecord[];
+    return db.prepare('SELECT * FROM institutions ORDER BY created_at DESC LIMIT ? OFFSET ?').all<InstitutionRecord>(limit, offset);
   }
 }
