@@ -1,0 +1,1 @@
+{"certificateNumber":"CERT-2026-TEST-12345","credential":{"degree":"B.Sc.","grade":"Distinction","issueDate":"2026-06-01T00:00:00.000Z","programName":"Physics"},"institution":{"code":"TEST-001","id":"inst-1"},"student":{"email":"jane@test.edu","firstName":"Jane","id":"stu-1","identifier":"STU-100","lastName":"Doe"}}
