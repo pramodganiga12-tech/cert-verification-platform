@@ -77,7 +77,24 @@ export function requireRole(...roles: string[]) {
       return next(new UnauthorizedError('Authentication required'));
     }
 
-    if (!roles.includes(req.user.roleName)) {
+    const userRole = req.user.roleName;
+    const allowed = new Set<string>();
+
+    for (const r of roles) {
+      allowed.add(r);
+      if (r === 'ADMIN') {
+        allowed.add('SUPER_ADMIN');
+      }
+      if (r === 'INSTITUTION') {
+        allowed.add('SUPER_ADMIN');
+        allowed.add('ADMIN');
+        allowed.add('INSTITUTION_ADMIN');
+        allowed.add('ISSUER');
+        allowed.add('REVOKER');
+      }
+    }
+
+    if (!allowed.has(userRole)) {
       return next(new ForbiddenError(`Access denied. Requires one of roles: ${roles.join(', ')}`));
     }
 

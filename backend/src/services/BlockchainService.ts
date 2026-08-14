@@ -1,8 +1,9 @@
 import { ethers } from 'ethers';
-import { env } from '../config/env';
-import { Logger as logger } from '../utils/logger';
-import { AppError } from '../errors/AppError';
-import { BlockchainTxRepository } from '../repositories/BlockchainTxRepository';
+import { env } from '../config/env.js';
+import { Logger as logger } from '../utils/logger.js';
+import { AppError } from '../errors/AppError.js';
+import { BlockchainTxRepository } from '../repositories/BlockchainTxRepository.js';
+
 
 
 const ACADEMIC_CERTIFICATE_ABI = [

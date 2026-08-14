@@ -28,13 +28,19 @@ export class CertificateRepository {
 
   static async findByNumber(certificate_number: string): Promise<CertificateRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM certificates WHERE certificate_number = ?').get<CertificateRecord>(certificate_number);
+    const row = db.prepare('SELECT * FROM certificates WHERE LOWER(certificate_number) = LOWER(?)').get<CertificateRecord>(certificate_number.trim());
     return row || null;
   }
 
   static async findByCanonicalHash(canonical_hash: string): Promise<CertificateRecord | null> {
     const db = await getDb();
-    const row = db.prepare('SELECT * FROM certificates WHERE canonical_hash = ?').get<CertificateRecord>(canonical_hash);
+    const row = db.prepare('SELECT * FROM certificates WHERE LOWER(canonical_hash) = LOWER(?)').get<CertificateRecord>(canonical_hash.trim());
+    return row || null;
+  }
+
+  static async findByPdfHash(pdf_hash: string): Promise<CertificateRecord | null> {
+    const db = await getDb();
+    const row = db.prepare('SELECT * FROM certificates WHERE LOWER(pdf_hash) = LOWER(?)').get<CertificateRecord>(pdf_hash.trim());
     return row || null;
   }
 
@@ -62,5 +68,26 @@ export class CertificateRepository {
   static async listAll(limit = 50, offset = 0): Promise<CertificateRecord[]> {
     const db = await getDb();
     return db.prepare('SELECT * FROM certificates ORDER BY created_at DESC LIMIT ? OFFSET ?').all<CertificateRecord>(limit, offset);
+  }
+
+  static async listByStudent(student_id: string): Promise<CertificateRecord[]> {
+    const db = await getDb();
+    return db.prepare('SELECT * FROM certificates WHERE student_id = ? ORDER BY created_at DESC').all<CertificateRecord>(student_id);
+  }
+
+  static async listByInstitution(institution_id: string): Promise<CertificateRecord[]> {
+    const db = await getDb();
+    return db.prepare('SELECT * FROM certificates WHERE institution_id = ? ORDER BY created_at DESC').all<CertificateRecord>(institution_id);
+  }
+
+  static async updateStatus(id: string, status: CertificateRecord['status'], reason?: string): Promise<CertificateRecord> {
+    const db = await getDb();
+    db.prepare(`
+      UPDATE certificates
+      SET status = ?, revocation_reason = ?, revoked_at = CASE WHEN ? = 'REVOKED' THEN datetime('now') ELSE revoked_at END, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(status, reason || null, status, id);
+    const updated = await this.findById(id);
+    return updated!;
   }
 }

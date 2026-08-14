@@ -42,6 +42,9 @@ export async function initDatabaseInstance(): Promise<SqlJsDatabase> {
     } else {
       sqlInstance = new SQL.Database();
     }
+
+    const { runMigrationsAndSeeds } = await import('./seed.js');
+    await runMigrationsAndSeeds(sqlInstance);
   }
   return sqlInstance;
 }
@@ -59,13 +62,15 @@ export interface DbWrapper {
 }
 
 export function getDbWrapper(rawDb: SqlJsDatabase): DbWrapper {
+  const sanitizeParams = (params: unknown[]) => params.map((p) => (p === undefined ? null : p));
+
   return {
     prepare(sql: string): StatementWrapper {
       return {
         get<T = Record<string, unknown>>(...params: unknown[]): T | undefined {
           const stmt = rawDb.prepare(sql);
           try {
-            stmt.bind(params as (string | number | null | Uint8Array)[]);
+            stmt.bind(sanitizeParams(params) as (string | number | null | Uint8Array)[]);
             if (stmt.step()) {
               const row = stmt.getAsObject();
               return row as unknown as T;
@@ -79,7 +84,7 @@ export function getDbWrapper(rawDb: SqlJsDatabase): DbWrapper {
           const stmt = rawDb.prepare(sql);
           const results: T[] = [];
           try {
-            stmt.bind(params as (string | number | null | Uint8Array)[]);
+            stmt.bind(sanitizeParams(params) as (string | number | null | Uint8Array)[]);
             while (stmt.step()) {
               results.push(stmt.getAsObject() as unknown as T);
             }
@@ -89,7 +94,8 @@ export function getDbWrapper(rawDb: SqlJsDatabase): DbWrapper {
           }
         },
         run(...params: unknown[]): { changes: number } {
-          rawDb.run(sql, params as (string | number | null | Uint8Array)[]);
+          const clean = sanitizeParams(params) as (string | number | null | Uint8Array)[];
+          rawDb.run(sql, clean);
           const changes = rawDb.getRowsModified();
           saveDb();
           return { changes };

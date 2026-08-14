@@ -35,14 +35,15 @@ export class StudentController {
 
   static async list(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const institutionId = req.user?.roleName === 'INSTITUTION' ? req.user.institutionId! : (req.query.institutionId as string);
-      if (!institutionId) {
-        throw new BadRequestError('Institution ID query parameter is required for listing students');
-      }
+      const userInstId = req.user?.institutionId;
+      const institutionId = userInstId || (req.query.institutionId as string);
+      const limit = parseInt((req.query.limit as string) || '50', 10);
+      const offset = parseInt((req.query.offset as string) || '0', 10);
 
-      const limit = parseInt(req.query.limit as string || '50', 10);
-      const offset = parseInt(req.query.offset as string || '0', 10);
-      const list = await StudentService.listStudentsByInstitution(institutionId, limit, offset);
+      const list = institutionId
+        ? await StudentService.listStudentsByInstitution(institutionId, limit, offset)
+        : await StudentService.listAllStudents(limit, offset);
+
       ApiResponse.success(res, list, 'Students listed successfully');
     } catch (error) {
       next(error);
@@ -60,6 +61,17 @@ export class StudentController {
 
       const updated = await StudentService.updateStudent(id, req.body, req.user?.id);
       ApiResponse.success(res, updated, 'Student record updated successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
+      await StudentService.getStudentById(id);
+      await StudentService.deleteStudent(id, req.user?.id);
+      ApiResponse.success(res, { id }, 'Student deleted successfully');
     } catch (error) {
       next(error);
     }

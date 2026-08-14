@@ -82,6 +82,10 @@ export class StudentService {
     return StudentRepository.listByInstitution(institutionId, limit, offset);
   }
 
+  static async listAllStudents(limit = 50, offset = 0): Promise<StudentRecord[]> {
+    return StudentRepository.listAll(limit, offset);
+  }
+
   static async updateStudent(id: string, input: UpdateStudentInput, actorUserId?: string): Promise<StudentRecord> {
     await this.getStudentById(id);
 
@@ -103,6 +107,25 @@ export class StudentService {
     });
 
     return updated;
+  }
+
+  static async deleteStudent(id: string, actorUserId?: string): Promise<boolean> {
+    const student = await this.getStudentById(id);
+    const deleted = await StudentRepository.delete(id);
+
+    if (deleted) {
+      await AuditLogRepository.create({
+        id: crypto.randomUUID(),
+        user_id: actorUserId || null,
+        action: 'STUDENT_DELETED',
+        entity_type: 'STUDENT',
+        entity_id: id,
+        ip_address: null,
+        details: JSON.stringify({ studentIdentifier: student.student_identifier, name: `${student.first_name} ${student.last_name}` }),
+      });
+    }
+
+    return deleted;
   }
 
   static async bulkImportStudents(institutionId: string, csvData: string, actorUserId?: string): Promise<BulkImportResult> {

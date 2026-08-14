@@ -39,7 +39,7 @@ let server: Server | null = null;
 export async function startServer(port = env.PORT): Promise<Server> {
   await initDatabaseInstance();
   return new Promise((resolve) => {
-    server = app.listen(port, () => {
+    server = app.listen(port, '0.0.0.0', () => {
       Logger.info(`[Server] Express listening on port ${port} in ${env.NODE_ENV} mode`);
       Logger.info(`[Server] Health check: http://localhost:${port}${env.API_PREFIX}/health`);
       Logger.info(`[Server] Version check: http://localhost:${port}${env.API_PREFIX}/version`);
@@ -48,8 +48,8 @@ export async function startServer(port = env.PORT): Promise<Server> {
   });
 }
 
-// Auto-start server only if directly executed and not in test environment
-if (process.env.NODE_ENV !== 'test' && require.main === module) {
+// Auto-start server if not in test environment
+if (process.env.NODE_ENV !== 'test') {
   startServer().catch((err) => {
     Logger.error('[Server] Failed to initialize database or start server:', err);
     process.exit(1);

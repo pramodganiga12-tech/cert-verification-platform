@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { BlockchainService } from '../services/BlockchainService';
+import { BlockchainService } from '../services/BlockchainService.js';
+
 
 describe('Blockchain Integration Service Unit Tests', () => {
   const blockchainService = new BlockchainService();

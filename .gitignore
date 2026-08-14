@@ -15,6 +15,7 @@ out/
 # Local database & Storage
 database/*.sqlite
 database/*.sqlite-journal
+database/ipfs_storage/
 *.db
 uploads/
 ipfs-data/

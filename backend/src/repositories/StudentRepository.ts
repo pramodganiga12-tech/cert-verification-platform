@@ -56,4 +56,15 @@ export class StudentRepository {
     const db = await getDb();
     return db.prepare('SELECT * FROM students WHERE institution_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?').all<StudentRecord>(institution_id, limit, offset);
   }
+
+  static async listAll(limit = 50, offset = 0): Promise<StudentRecord[]> {
+    const db = await getDb();
+    return db.prepare('SELECT * FROM students ORDER BY created_at DESC LIMIT ? OFFSET ?').all<StudentRecord>(limit, offset);
+  }
+
+  static async delete(id: string): Promise<boolean> {
+    const db = await getDb();
+    const result = db.prepare('DELETE FROM students WHERE id = ?').run(id);
+    return result.changes > 0;
+  }
 }
