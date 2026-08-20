@@ -23,17 +23,17 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Root Route renders Login Page */}
-          <Route path="/" element={<LoginPage />} />
+          {/* Main Verification Platform Homepage */}
+          <Route path="/" element={<PublicVerificationPage />} />
 
-          {/* Admin & Institution Portal Sign-In */}
-          <Route path="/login" element={<LoginPage />} />
+          {/* Public Verification Page */}
+          <Route path="/verify" element={<PublicVerificationPage />} />
 
-          {/* Student Credential Wallet & PDF Generator */}
+          {/* Student Credential Wallet & PDF Viewer */}
           <Route path="/wallet" element={<StudentWalletPage />} />
 
-          {/* Public Verification Portal */}
-          <Route path="/verify" element={<PublicVerificationPage />} />
+          {/* Institution Admin Portal Sign-In */}
+          <Route path="/login" element={<LoginPage />} />
 
           {/* Protected Institution Admin Dashboard Routes */}
           <Route
@@ -77,8 +77,8 @@ export default function App() {
             }
           />
 
-          {/* Fallback to Dashboard */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          {/* Catch-all Route redirects to Main Homepage */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
