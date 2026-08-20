@@ -64,6 +64,107 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  // Institutions endpoint
+  if (url.includes('/institutions')) {
+    return res.status(200).json({
+      success: true,
+      data: [
+        {
+          id: 'inst-shreedevi-001',
+          name: 'Shree Devi Institute of Technology',
+          code: 'SDIT-VTU',
+          email: 'info@sdit.ac.in',
+          status: 'ACTIVE',
+        },
+      ],
+    });
+  }
+
+  // Bulk import endpoint
+  if (url.includes('/students/bulk-import') && req.method === 'POST') {
+    return res.status(200).json({
+      success: true,
+      message: 'Bulk import successful',
+      data: {
+        totalProcessed: 5,
+        totalSuccess: 5,
+        totalFailed: 0,
+        message: 'Successfully imported student profiles into directory.',
+      },
+    });
+  }
+
+  // Students endpoint
+  if (url.includes('/students')) {
+    if (req.method === 'POST') {
+      const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+      return res.status(200).json({
+        success: true,
+        data: {
+          id: `stud-${Date.now()}`,
+          institution_id: body.institutionId || 'inst-shreedevi-001',
+          student_identifier: body.studentIdentifier || `STUD-${Math.floor(100000 + Math.random() * 900000)}`,
+          first_name: body.firstName || 'Alice',
+          last_name: body.lastName || 'Verifier',
+          email: body.email || 'alice@vuniv.edu',
+          dob: body.dob || '2004-01-01',
+          created_at: new Date().toISOString(),
+        },
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: [
+        {
+          id: 'stud-001',
+          institution_id: 'inst-shreedevi-001',
+          student_identifier: 'STUD-100201',
+          first_name: 'Rahul',
+          last_name: 'Verma',
+          email: 'rahul.verma@sdit.ac.in',
+          dob: '2004-08-15',
+          created_at: new Date().toISOString(),
+        },
+        {
+          id: 'stud-002',
+          institution_id: 'inst-shreedevi-001',
+          student_identifier: 'STUD-806179',
+          first_name: 'Alice',
+          last_name: 'Verifier',
+          email: 'alice@vuniv.edu',
+          dob: '2005-02-20',
+          created_at: new Date().toISOString(),
+        },
+      ],
+    });
+  }
+
+  // Certificates endpoint
+  if (url.includes('/certificates')) {
+    return res.status(200).json({
+      success: true,
+      data: [
+        {
+          id: 'cert-001',
+          certificate_number: 'CERT-2026-VUNIV-A1667359',
+          institution_id: 'inst-shreedevi-001',
+          student_id: 'stud-001',
+          program_name: 'Computer Science & Engineering',
+          degree: 'BACHELOR_OF_ENGINEERING',
+          grade: 'FIRST_CLASS_WITH_DISTINCTION',
+          issue_date: '2026-05-15',
+          canonical_hash: '5f604d1fa9f54748911b1509c1f949ef036db653cec54538ac1ebd2076ff4014',
+          ipfs_cid: 'QmQmNwtWshVV3vx6WuQeucP74gPuvnD68EvcmMvG7m4Z5k',
+          status: 'ISSUED',
+          revocation_reason: null,
+          revoked_at: null,
+          created_at: new Date().toISOString(),
+        },
+      ],
+    });
+  }
+
   // Default API response
   return res.status(200).json({
     success: true,
