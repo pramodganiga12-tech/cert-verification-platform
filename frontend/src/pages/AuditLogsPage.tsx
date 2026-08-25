@@ -48,85 +48,85 @@ export const AuditLogsPage: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-50 tracking-tight">System Audit Logs & Verification Analytics</h1>
-            <p className="text-xs text-slate-400">Immutable ledger of platform operational events and live verification metrics.</p>
+            <h1 className="text-2xl font-extrabold font-heading text-gradient-cyan tracking-tight">System Audit Logs & Verification Analytics</h1>
+            <p className="text-xs text-slate-400 font-mono-custom">Immutable ledger of platform operational events and live verification metrics.</p>
           </div>
 
           <button
             onClick={fetchData}
-            className="p-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-300 transition-all shrink-0"
+            className="p-2.5 btn-glass rounded-xl text-slate-300 transition-all shrink-0"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
 
-        {/* Analytics Cards */}
+        {/* Glassmorphism Analytics Cards */}
         {analytics && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-2">
+            <div className="p-5 bg-glass-card border border-glass-cyan rounded-2xl space-y-2 glow-cyan">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-400">Total Verifications</span>
-                <div className="p-2 bg-sky-500/10 text-sky-400 rounded-xl">
+                <div className="p-2 bg-cyan-500/10 text-cyan-400 rounded-xl border border-cyan-500/20">
                   <Activity className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-3xl font-extrabold text-slate-50">{analytics.counts.total}</p>
-              <p className="text-[11px] text-slate-500 font-mono">Public & Portal Queries</p>
+              <p className="text-3xl font-extrabold font-heading text-white">{analytics.counts.total}</p>
+              <p className="text-[11px] text-slate-500 font-mono-custom">Public & Portal Queries</p>
             </div>
 
-            <div className="p-5 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-2">
+            <div className="p-5 bg-glass-card border border-glass-emerald rounded-2xl space-y-2 glow-emerald">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-400">Verified Authentic</span>
-                <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl">
+                <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-3xl font-extrabold text-slate-50">{analytics.counts.verified}</p>
-              <p className="text-[11px] text-emerald-400 font-mono">100% Cryptographic Match</p>
+              <p className="text-3xl font-extrabold font-heading text-white">{analytics.counts.verified}</p>
+              <p className="text-[11px] text-emerald-400 font-mono-custom">100% Cryptographic Match</p>
             </div>
 
-            <div className="p-5 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-2">
+            <div className="p-5 bg-glass-card border border-glass rounded-2xl space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-400">Tampered / Invalid</span>
-                <div className="p-2 bg-amber-500/10 text-amber-400 rounded-xl">
+                <div className="p-2 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">
                   <ShieldAlert className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-3xl font-extrabold text-slate-50">{analytics.counts.tampered}</p>
-              <p className="text-[11px] text-amber-400 font-mono">Hash Mismatches Intercepted</p>
+              <p className="text-3xl font-extrabold font-heading text-white">{analytics.counts.tampered}</p>
+              <p className="text-[11px] text-amber-400 font-mono-custom">Hash Mismatches Intercepted</p>
             </div>
 
-            <div className="p-5 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-2">
+            <div className="p-5 bg-glass-card border border-glass-rose rounded-2xl space-y-2 glow-rose">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-400">Revoked Checks</span>
-                <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl">
+                <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl border border-rose-500/20">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-3xl font-extrabold text-slate-50">{analytics.counts.revoked}</p>
-              <p className="text-[11px] text-rose-400 font-mono">Revoked Credential Inquiries</p>
+              <p className="text-3xl font-extrabold font-heading text-white">{analytics.counts.revoked}</p>
+              <p className="text-[11px] text-rose-400 font-mono-custom">Revoked Credential Inquiries</p>
             </div>
           </div>
         )}
 
-        {/* Filter Bar */}
+        {/* Glassmorphism Filter Bar */}
         <div className="relative">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search audit actions (e.g. CERTIFICATE_ISSUED), entity types, or IP addresses..."
-            className="w-full bg-slate-900 border border-slate-800 focus:border-sky-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-100 placeholder-slate-500 font-sans"
+            className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-100 placeholder-slate-500 font-sans transition-all focus:ring-2 focus:ring-cyan-500/20"
           />
           <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500 pointer-events-none" />
         </div>
 
-        {/* Audit Log Datatable */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+        {/* Glassmorphism Audit Log Datatable */}
+        <div className="bg-glass-card border border-glass rounded-3xl p-6 shadow-2xl glow-violet">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <tr className="border-b border-white/10 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   <th className="py-3 px-4">Action</th>
                   <th className="py-3 px-4">Entity Type</th>
                   <th className="py-3 px-4">Entity ID</th>
@@ -134,10 +134,10 @@ export const AuditLogsPage: React.FC = () => {
                   <th className="py-3 px-4">Timestamp</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-xs font-mono">
+              <tbody className="divide-y divide-white/5 text-xs font-mono-custom">
                 {filteredLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-sky-300">{log.action}</td>
+                  <tr key={log.id} className="hover:bg-white/5 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-cyan-300">{log.action}</td>
                     <td className="py-3.5 px-4 text-slate-300">{log.entity_type}</td>
                     <td className="py-3.5 px-4 text-slate-400 truncate max-w-[160px]">{log.entity_id || 'N/A'}</td>
                     <td className="py-3.5 px-4 text-emerald-400">{log.ip_address || '127.0.0.1'}</td>

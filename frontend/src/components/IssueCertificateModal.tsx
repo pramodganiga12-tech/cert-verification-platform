@@ -107,13 +107,13 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden font-sans max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#05070d]/70 backdrop-blur-xl animate-in fade-in duration-200">
+      <div className="w-full max-w-xl bg-glass-elevated border border-glass-light rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden font-sans max-h-[90vh] overflow-y-auto">
         
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 bg-gradient-to-tr from-sky-600 to-indigo-600 rounded-xl text-white">
+            <div className="p-2.5 bg-gradient-to-tr from-cyan-500 via-sky-500 to-violet-600 rounded-xl text-white">
               <Award className="w-6 h-6" />
             </div>
             <div>
@@ -122,7 +122,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
             </div>
           </div>
 
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-xl">
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-200 hover:bg-white/10 rounded-xl">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -140,7 +140,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
           {/* PDF Certificate File Upload (Optional) */}
           <div className="space-y-2">
             <label className="block text-xs font-medium text-slate-300">Upload PDF Certificate Document (Optional)</label>
-            <div className="p-4 bg-slate-950 border-2 border-dashed border-slate-800 hover:border-sky-500/50 rounded-2xl transition-all text-center relative group">
+            <div className="p-4 bg-glass-input border-2 border-dashed border-glass hover:border-cyan-500/50 rounded-2xl transition-all text-center relative group">
               <input
                 type="file"
                 accept="application/pdf"
@@ -180,7 +180,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
               <select
                 value={selectedInstitutionId}
                 onChange={(e) => setSelectedInstitutionId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2.5 text-xs text-slate-200"
+                className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-3 py-2.5 text-xs text-slate-200"
               >
                 {institutions.length > 0 ? (
                   institutions.map((inst) => (
@@ -200,7 +200,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
                 <select
                   value={selectedStudentId}
                   onChange={(e) => setSelectedStudentId(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2.5 text-xs text-slate-200"
+                  className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-3 py-2.5 text-xs text-slate-200"
                 >
                   {students.map((stu) => (
                     <option key={stu.id} value={stu.id}>
@@ -214,7 +214,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
                   placeholder="Student Full Name (e.g. Jane Doe)"
                   value={customStudentName}
                   onChange={(e) => setCustomStudentName(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2.5 text-xs text-slate-100"
+                  className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-3 py-2.5 text-xs text-slate-100"
                 />
               )}
             </div>
@@ -228,7 +228,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
               value={programName}
               onChange={(e) => setProgramName(e.target.value)}
               placeholder="e.g. Computer Science & Artificial Intelligence"
-              className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-4 py-2.5 text-xs text-slate-100"
+              className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-4 py-2.5 text-xs text-slate-100"
             />
           </div>
 
@@ -238,7 +238,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
               <select
                 value={degree}
                 onChange={(e) => setDegree(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2.5 text-xs text-slate-200"
+                className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-3 py-2.5 text-xs text-slate-200"
               >
                 <option value="BACHELOR_OF_SCIENCE">Bachelor of Science</option>
                 <option value="BACHELOR_OF_ARTS">Bachelor of Arts</option>
@@ -254,7 +254,7 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
                 value={grade}
                 onChange={(e) => setGrade(e.target.value)}
                 placeholder="e.g. First Class Honors"
-                className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2.5 text-xs text-slate-100"
+                className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-3 py-2.5 text-xs text-slate-100"
               />
             </div>
 
@@ -265,12 +265,12 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
                 required
                 value={issueDate}
                 onChange={(e) => setIssueDate(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3 py-2.5 text-xs text-slate-100"
+                className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-3 py-2.5 text-xs text-slate-100"
               />
             </div>
           </div>
 
-          <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1 font-mono">
+          <div className="p-3 bg-glass-card rounded-xl border border-glass text-xs text-slate-400 space-y-1 font-mono">
             <div className="flex items-center space-x-1.5 text-sky-400 font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Automated Execution Pipeline</span>
@@ -280,18 +280,18 @@ export const IssueCertificateModal: React.FC<IssueCertificateModalProps> = ({ is
             </p>
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-white/10">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl"
+              className="px-4 py-2.5 btn-glass text-slate-300 text-xs font-semibold rounded-xl"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="px-6 py-2.5 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-500/20 flex items-center space-x-2 disabled:opacity-50"
+              className="px-6 py-2.5 btn-futuristic text-xs rounded-xl flex items-center space-x-2 disabled:opacity-50"
             >
               {isLoading ? (
                 <>

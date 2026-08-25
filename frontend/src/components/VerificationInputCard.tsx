@@ -117,18 +117,18 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-sky-950/20 backdrop-blur-xl relative overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto bg-glass-card border border-glass rounded-3xl p-6 sm:p-8 shadow-2xl glow-cyan backdrop-blur-xl relative overflow-hidden">
       {/* Glow highlight background */}
-      <div className="absolute -top-24 -left-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 -left-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
       <div className="text-center mb-8 relative z-10">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 bg-sky-500/10 text-sky-400 text-xs font-semibold rounded-full border border-sky-500/20 mb-3">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-semibold rounded-full border border-cyan-500/20 mb-3">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Decentralized Verification Gateway</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-50 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-gradient-cyan tracking-tight">
           Verify Academic Credentials
         </h2>
         <p className="text-slate-400 text-sm mt-2 max-w-xl mx-auto">
@@ -137,7 +137,7 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex flex-wrap justify-center gap-2 p-1.5 bg-slate-950/60 rounded-2xl border border-slate-800/80 mb-6 relative z-10">
+      <div className="flex flex-wrap justify-center gap-2 p-1.5 bg-glass-input rounded-2xl border border-glass mb-6 relative z-10">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -175,9 +175,9 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="e.g. 5f604d1fa9f54748911b1509c1f949ef036db653cec54538ac1ebd2076ff4014"
-                className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 rounded-xl px-4 py-3.5 text-sm text-slate-100 placeholder-slate-600 font-mono transition-all"
+                className="w-full bg-glass-input border border-glass focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3.5 text-sm text-slate-100 placeholder-slate-500 font-mono transition-all"
               />
-              <Hash className="absolute right-4 top-3.5 w-5 h-5 text-slate-600 pointer-events-none" />
+              <Hash className="absolute right-4 top-3.5 w-5 h-5 text-slate-500 pointer-events-none" />
             </div>
             <p className="text-[11px] text-slate-500 font-mono">
               Tip: The SHA-256 hash is printed at the bottom of official transcript PDFs and QR codes.
@@ -196,9 +196,9 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="e.g. CERT-2026-VUNIV-A1667359 or 8eb5e02f-ee4c-4919-88f8-4da110dc920c"
-                className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 rounded-xl px-4 py-3.5 text-sm text-slate-100 placeholder-slate-600 font-mono transition-all"
+                className="w-full bg-glass-input border border-glass focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3.5 text-sm text-slate-100 placeholder-slate-500 font-mono transition-all"
               />
-              <Search className="absolute right-4 top-3.5 w-5 h-5 text-slate-600 pointer-events-none" />
+              <Search className="absolute right-4 top-3.5 w-5 h-5 text-slate-500 pointer-events-none" />
             </div>
           </div>
         )}
@@ -213,10 +213,10 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
             onDrop={handleDrop}
             className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 ${
               isDragOver
-                ? 'border-sky-400 bg-sky-500/10 scale-[1.01]'
+                ? 'border-cyan-400 bg-cyan-500/10 scale-[1.01]'
                 : selectedFile
                 ? 'border-emerald-500/50 bg-emerald-500/5'
-                : 'border-slate-800 bg-slate-950/60 hover:border-slate-700'
+                : 'border-glass bg-glass-input hover:border-cyan-500/30'
             }`}
             onClick={() => document.getElementById('pdf-file-input')?.click()}
           >
@@ -237,12 +237,12 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
               </div>
             ) : (
               <div className="space-y-3">
-                <div className="w-12 h-12 bg-slate-800/80 text-sky-400 rounded-2xl flex items-center justify-center mx-auto border border-slate-700">
+                <div className="w-12 h-12 bg-glass-card text-cyan-400 rounded-2xl flex items-center justify-center mx-auto border border-glass">
                   <UploadCloud className="w-6 h-6" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-300">
-                    <span className="text-sky-400 font-semibold">Click to upload</span> or drag and drop PDF certificate
+                    <span className="text-cyan-400 font-semibold">Click to upload</span> or drag and drop PDF certificate
                   </p>
                   <p className="text-xs text-slate-500 mt-1">Official platform PDF certificates up to 10MB</p>
                 </div>
@@ -261,7 +261,7 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={`{\n  "certificateNumber": "CERT-2026-VUNIV-...",\n  "institutionId": "...",\n  "studentId": "...",\n  "programName": "Computer Science",\n  "degree": "BACHELOR_OF_SCIENCE",\n  "issueDate": "2026-05-01"\n}`}
-              className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 rounded-xl p-4 text-xs text-slate-200 placeholder-slate-600 font-mono transition-all"
+              className="w-full bg-glass-input border border-glass focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl p-4 text-xs text-slate-200 placeholder-slate-500 font-mono transition-all"
             />
           </div>
         )}
@@ -276,7 +276,7 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Paste raw QR code text or JSON payload here..."
-              className="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 rounded-xl p-4 text-xs text-slate-200 placeholder-slate-600 font-mono transition-all"
+              className="w-full bg-glass-input border border-glass focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl p-4 text-xs text-slate-200 placeholder-slate-500 font-mono transition-all"
             />
           </div>
         )}
@@ -284,7 +284,7 @@ export const VerificationInputCard: React.FC<VerificationInputCardProps> = ({
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-4 px-6 bg-gradient-to-r from-sky-500 via-indigo-600 to-sky-600 hover:from-sky-400 hover:via-indigo-500 hover:to-sky-500 text-white font-bold rounded-xl shadow-lg shadow-sky-500/20 hover:shadow-sky-500/35 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-4 px-6 btn-futuristic rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <>

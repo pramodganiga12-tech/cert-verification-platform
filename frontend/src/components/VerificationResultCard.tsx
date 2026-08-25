@@ -93,8 +93,8 @@ Verified At: ${report.verifiedAt}`;
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 font-sans">
       {/* Banner Card */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="bg-glass-card border border-glass rounded-3xl p-6 sm:p-8 shadow-2xl glow-cyan backdrop-blur-xl relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
           <div className="flex items-center space-x-4">
             <div className={`p-3.5 rounded-2xl bg-gradient-to-tr ${statusConfig.gradient} text-white shadow-xl`}>
               <StatusIcon className="w-8 h-8" />
@@ -109,25 +109,25 @@ Verified At: ${report.verifiedAt}`;
 
           <button
             onClick={onReset}
-            className="flex items-center space-x-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all shrink-0"
+            className="flex items-center space-x-2 px-4 py-2 btn-glass text-slate-200 text-xs font-semibold rounded-xl transition-all shrink-0"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Verify Another File</span>
           </button>
         </div>
 
-        {/* PDF Analysis & Blockchain Hash Comparison Section (Pages 6, 10 & 14 of PDF Presentation) */}
-        <div className="mt-6 p-4 bg-slate-950/80 rounded-2xl border border-slate-800 space-y-4">
+        {/* PDF Analysis & Blockchain Hash Comparison Section */}
+        <div className="mt-6 p-4 bg-glass-card rounded-2xl border border-glass space-y-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
-              <div className="p-2.5 bg-sky-500/10 text-sky-400 rounded-xl border border-sky-500/20">
+              <div className="p-2.5 bg-cyan-500/10 text-cyan-400 rounded-xl border border-cyan-500/20">
                 <FileCheck className="w-5 h-5" />
               </div>
               <div>
                 <p className="text-xs font-semibold text-slate-300">PDF Certificate & Hash Analysis</p>
                 <p className="text-xs font-mono text-slate-400 mt-0.5">
                   Computed SHA-256 Hash:{' '}
-                  <span className="text-sky-300 font-bold">{report.canonicalHash ? `${report.canonicalHash.slice(0, 24)}...` : 'N/A'}</span>
+                  <span className="text-cyan-300 font-bold">{report.canonicalHash ? `${report.canonicalHash.slice(0, 24)}...` : 'N/A'}</span>
                 </p>
               </div>
             </div>
@@ -145,7 +145,7 @@ Verified At: ${report.verifiedAt}`;
 
               <button
                 onClick={() => setShowHashPromptModal(true)}
-                className="px-3.5 py-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-500/20 flex items-center space-x-1.5 shrink-0 transition-all"
+                className="px-3.5 py-2 btn-futuristic text-xs rounded-xl flex items-center space-x-1.5 shrink-0 transition-all"
               >
                 <Key className="w-3.5 h-3.5" />
                 <span>Scan QR / Prompt Hash</span>
@@ -153,12 +153,12 @@ Verified At: ${report.verifiedAt}`;
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono pt-2 border-t border-slate-900">
-            <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono pt-2 border-t border-white/5">
+            <div className="p-3 bg-glass-input rounded-xl border border-glass">
               <span className="text-[10px] text-slate-500 block uppercase font-sans font-semibold">SCANNED HASH (GENERATED)</span>
-              <span className="text-sky-300 font-bold break-all">{report.canonicalHash || 'N/A'}</span>
+              <span className="text-cyan-300 font-bold break-all">{report.canonicalHash || 'N/A'}</span>
             </div>
-            <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <div className="p-3 bg-glass-input rounded-xl border border-glass">
               <span className="text-[10px] text-slate-500 block uppercase font-sans font-semibold">STORED BLOCKCHAIN HASH</span>
               <span className="text-emerald-400 font-bold break-all">
                 {report.isAuthentic ? report.canonicalHash : 'RECORD_NOT_FOUND_OR_ALTERED'}
@@ -170,8 +170,8 @@ Verified At: ${report.verifiedAt}`;
         {/* Certificate Metadata Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
           {/* Student Info */}
-          <div className="bg-slate-950/60 rounded-2xl p-5 border border-slate-800/80 space-y-3">
-            <div className="flex items-center space-x-2 text-sky-400 font-semibold text-xs uppercase tracking-wider">
+          <div className="bg-glass-card rounded-2xl p-5 border border-glass space-y-3">
+            <div className="flex items-center space-x-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider">
               <User className="w-4 h-4" />
               <span>Student Profile</span>
             </div>
@@ -179,7 +179,7 @@ Verified At: ${report.verifiedAt}`;
               <div className="space-y-1">
                 <p className="text-lg font-bold text-slate-100">{report.studentDetails.studentName}</p>
                 <p className="text-xs text-slate-400 font-mono">
-                  Roll / Student ID: <span className="text-sky-300">{report.studentDetails.studentId}</span>
+                  Roll / Student ID: <span className="text-cyan-300">{report.studentDetails.studentId}</span>
                 </p>
               </div>
             ) : (
@@ -188,8 +188,8 @@ Verified At: ${report.verifiedAt}`;
           </div>
 
           {/* Institution Info */}
-          <div className="bg-slate-950/60 rounded-2xl p-5 border border-slate-800/80 space-y-3">
-            <div className="flex items-center space-x-2 text-indigo-400 font-semibold text-xs uppercase tracking-wider">
+          <div className="bg-glass-card rounded-2xl p-5 border border-glass space-y-3">
+            <div className="flex items-center space-x-2 text-violet-400 font-semibold text-xs uppercase tracking-wider">
               <Building2 className="w-4 h-4" />
               <span>Issuing Institution</span>
             </div>
@@ -197,7 +197,7 @@ Verified At: ${report.verifiedAt}`;
               <div className="space-y-1">
                 <p className="text-lg font-bold text-slate-100">{report.issuerDetails.institutionName}</p>
                 <p className="text-xs text-slate-400 font-mono">
-                  Institution Code: <span className="text-indigo-300">{report.issuerDetails.institutionCode}</span>
+                  Institution Code: <span className="text-violet-300">{report.issuerDetails.institutionCode}</span>
                 </p>
               </div>
             ) : (
@@ -206,7 +206,7 @@ Verified At: ${report.verifiedAt}`;
           </div>
 
           {/* Credential Details */}
-          <div className="bg-slate-950/60 rounded-2xl p-5 border border-slate-800/80 space-y-3 md:col-span-2">
+          <div className="bg-glass-card rounded-2xl p-5 border border-glass space-y-3 md:col-span-2">
             <div className="flex items-center space-x-2 text-emerald-400 font-semibold text-xs uppercase tracking-wider">
               <GraduationCap className="w-4 h-4" />
               <span>Academic Credential Summary</span>
@@ -233,22 +233,22 @@ Verified At: ${report.verifiedAt}`;
         </div>
 
         {/* Proof Ledger & Dynamic Generated QR Code Section */}
-        <div className="mt-6 pt-6 border-t border-slate-800 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="mt-6 pt-6 border-t border-white/10 grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-3 font-mono text-xs">
             <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center space-x-2">
-              <Cpu className="w-4 h-4 text-sky-400" />
+              <Cpu className="w-4 h-4 text-cyan-400" />
               <span>Cryptographic Proof & Decentralized Storage</span>
             </h4>
 
             {/* Canonical Hash */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800/80 gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-glass-input rounded-xl border border-glass gap-2">
               <div className="truncate">
                 <span className="text-slate-500 mr-2">SHA-256:</span>
-                <span className="text-sky-300 font-semibold truncate">{report.canonicalHash || 'N/A'}</span>
+                <span className="text-cyan-300 font-semibold truncate">{report.canonicalHash || 'N/A'}</span>
               </div>
               <button
                 onClick={() => copyToClipboard(report.canonicalHash || '')}
-                className="flex items-center space-x-1 px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-slate-300 text-[11px] rounded-lg border border-slate-700 shrink-0 transition-all"
+                className="flex items-center space-x-1 px-2.5 py-1 btn-glass text-slate-300 text-[11px] rounded-lg shrink-0 transition-all"
               >
                 {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                 <span>{copied ? 'Copied' : 'Copy Hash'}</span>
@@ -256,13 +256,13 @@ Verified At: ${report.verifiedAt}`;
             </div>
 
             {/* IPFS CID */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800/80 gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-glass-input rounded-xl border border-glass gap-2">
               <div className="truncate">
                 <span className="text-slate-500 mr-2">IPFS CID:</span>
-                <span className="text-indigo-300 font-semibold truncate">{report.ipfsCid || 'Not pinned to IPFS'}</span>
+                <span className="text-violet-300 font-semibold truncate">{report.ipfsCid || 'Not pinned to IPFS'}</span>
               </div>
               {report.ipfsCid && (
-                <span className="inline-flex items-center space-x-1 text-sky-400 hover:underline text-[11px] shrink-0">
+                <span className="inline-flex items-center space-x-1 text-cyan-400 hover:underline text-[11px] shrink-0">
                   <Globe className="w-3 h-3" />
                   <span>IPFS Storage Gateway</span>
                 </span>
@@ -270,7 +270,7 @@ Verified At: ${report.verifiedAt}`;
             </div>
 
             {/* EVM Blockchain Tx */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800/80 gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-glass-input rounded-xl border border-glass gap-2">
               <div className="truncate">
                 <span className="text-slate-500 mr-2">On-Chain Tx:</span>
                 <span className="text-emerald-300 font-semibold truncate">{report.onChainTxHash || 'Pending on-chain notarization'}</span>
@@ -285,18 +285,18 @@ Verified At: ${report.verifiedAt}`;
           </div>
 
           {/* Generated Dynamic QR Code Box */}
-          <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-center space-y-3 flex flex-col items-center justify-center">
+          <div className="p-4 bg-glass-card rounded-2xl border border-glass text-center space-y-3 flex flex-col items-center justify-center">
             <div className="flex items-center space-x-1.5 text-xs font-semibold text-slate-300">
-              <QrCode className="w-4 h-4 text-sky-400" />
+              <QrCode className="w-4 h-4 text-cyan-400" />
               <span>Generated QR Code</span>
             </div>
 
             {report.canonicalHash ? (
-              <div className="p-2 bg-white rounded-xl shadow-lg border border-slate-700">
+              <div className="p-2 bg-white rounded-xl shadow-lg border border-glass">
                 <img src={qrCodeDataUrl} alt="Certificate Verification QR Code" className="w-32 h-32" />
               </div>
             ) : (
-              <div className="w-32 h-32 bg-slate-900 rounded-xl flex items-center justify-center text-slate-600 text-xs font-mono">
+              <div className="w-32 h-32 bg-glass-input rounded-xl flex items-center justify-center text-slate-500 text-xs font-mono">
                 No Hash Available
               </div>
             )}
@@ -310,9 +310,9 @@ Verified At: ${report.verifiedAt}`;
 
       {/* Prompt Hash Modal */}
       {showHashPromptModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4 relative font-sans">
-            <div className="flex items-center space-x-3 text-sky-400">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#05070d]/70 backdrop-blur-xl animate-in fade-in duration-200">
+          <div className="w-full max-w-md bg-glass-elevated border border-glass-light rounded-3xl p-6 shadow-2xl space-y-4 relative font-sans">
+            <div className="flex items-center space-x-3 text-cyan-400">
               <Key className="w-6 h-6" />
               <h3 className="text-base font-bold text-slate-100">Enter Certificate Hash to Verify</h3>
             </div>
@@ -341,7 +341,7 @@ Verified At: ${report.verifiedAt}`;
                   value={promptHashInput}
                   onChange={(e) => setPromptHashInput(e.target.value)}
                   placeholder="Paste 64-character SHA-256 hash string..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 font-mono"
+                  className="w-full bg-glass-input border border-glass rounded-xl p-3 text-xs text-slate-100 font-mono focus:border-cyan-500"
                 />
               </div>
 
@@ -351,15 +351,15 @@ Verified At: ${report.verifiedAt}`;
                 <button
                   type="button"
                   onClick={() => setShowHashPromptModal(false)}
-                  className="px-4 py-2 bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl"
+                  className="px-4 py-2 btn-glass text-slate-300 text-xs font-semibold rounded-xl"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-500/20"
+                  className="px-5 py-2 btn-futuristic text-xs rounded-xl"
                 >
-                  Load Certificate Details
+                  Load Report
                 </button>
               </div>
             </form>

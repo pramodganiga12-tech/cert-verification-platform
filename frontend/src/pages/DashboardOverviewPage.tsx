@@ -93,7 +93,7 @@ export const DashboardOverviewPage: React.FC = () => {
 
             <button
               onClick={() => setRegisterStudentModalOpen(true)}
-              className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white font-heading font-bold text-xs rounded-xl border border-slate-700 transition-colors flex items-center space-x-2"
+              className="px-4 py-2.5 btn-glass text-slate-200 text-xs font-bold rounded-xl flex items-center space-x-2 transition-all"
             >
               <UserPlus className="w-4 h-4 text-cyan-400" />
               <span>Register Student</span>
@@ -101,7 +101,7 @@ export const DashboardOverviewPage: React.FC = () => {
 
             <button
               onClick={() => setBulkImportModalOpen(true)}
-              className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white font-heading font-bold text-xs rounded-xl border border-slate-700 transition-colors flex items-center space-x-2"
+              className="px-4 py-2.5 btn-glass text-slate-200 text-xs font-bold rounded-xl flex items-center space-x-2 transition-all"
             >
               <Upload className="w-4 h-4 text-violet-400" />
               <span>CSV Bulk Import</span>
@@ -111,24 +111,24 @@ export const DashboardOverviewPage: React.FC = () => {
 
         {/* 3D Metrics Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="bg-glass-card border border-cyan-500/30 rounded-3xl p-6 shadow-2xl space-y-2">
+          <div className="bg-glass-card border border-cyan-500/30 rounded-3xl p-6 shadow-2xl space-y-2 glow-cyan">
             <span className="text-[10px] text-cyan-400 uppercase font-bold">Total Issued Credentials</span>
             <div className="text-3xl font-heading font-bold text-white">{certificates.length}</div>
-            <p className="text-[11px] text-slate-400">Anchored on Ganache EVM Smart Contract</p>
+            <p className="text-[11px] text-slate-400 font-mono-custom">Anchored on Ganache EVM Smart Contract</p>
           </div>
 
-          <div className="bg-glass-card border border-emerald-500/30 rounded-3xl p-6 shadow-2xl space-y-2">
+          <div className="bg-glass-card border border-emerald-500/30 rounded-3xl p-6 shadow-2xl space-y-2 glow-emerald">
             <span className="text-[10px] text-emerald-400 uppercase font-bold">Active & Valid Records</span>
             <div className="text-3xl font-heading font-bold text-emerald-400">
               {certificates.filter((c) => c.status === 'ISSUED').length}
             </div>
-            <p className="text-[11px] text-slate-400">100% Verified Zero Tampering</p>
+            <p className="text-[11px] text-slate-400 font-mono-custom">100% Verified Zero Tampering</p>
           </div>
 
-          <div className="bg-glass-card border border-violet-500/30 rounded-3xl p-6 shadow-2xl space-y-2">
+          <div className="bg-glass-card border border-violet-500/30 rounded-3xl p-6 shadow-2xl space-y-2 glow-violet">
             <span className="text-[10px] text-violet-400 uppercase font-bold">Pinata IPFS Gateway Nodes</span>
             <div className="text-3xl font-heading font-bold text-violet-400">Online</div>
-            <p className="text-[11px] text-slate-400">Decentralized Metadata Storage</p>
+            <p className="text-[11px] text-slate-400 font-mono-custom">Decentralized Metadata Storage</p>
           </div>
         </div>
 
@@ -147,14 +147,14 @@ export const DashboardOverviewPage: React.FC = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search certificate # or program..."
-                  className="w-full bg-slate-950/90 border border-slate-800 focus:border-cyan-400 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500"
+                  className="w-full bg-glass-input border border-glass focus:border-cyan-400 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 font-sans"
                 />
                 <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-500" />
               </div>
 
               <button
                 onClick={fetchCertificates}
-                className="p-2 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl border border-slate-700 transition-colors"
+                className="p-2 btn-glass text-slate-300 rounded-xl transition-colors"
               >
                 <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
               </button>
@@ -162,9 +162,9 @@ export const DashboardOverviewPage: React.FC = () => {
           </div>
 
           {/* Table Container */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-800">
+          <div className="overflow-x-auto rounded-2xl border border-white/10">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-950/90 text-slate-400 uppercase text-[10px] border-b border-slate-800 font-heading">
+              <thead className="bg-glass-input text-slate-400 uppercase text-[10px] border-b border-white/10 font-heading">
                 <tr>
                   <th className="p-4">Certificate #</th>
                   <th className="p-4">Degree / Program</th>
@@ -173,16 +173,16 @@ export const DashboardOverviewPage: React.FC = () => {
                   <th className="p-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-300">
+              <tbody className="divide-y divide-white/5 text-slate-300">
                 {filteredCerts.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-8 text-center text-slate-500">
+                    <td colSpan={5} className="p-8 text-center text-slate-500 font-sans">
                       No certificates match your search query.
                     </td>
                   </tr>
                 ) : (
                   filteredCerts.map((cert) => (
-                    <tr key={cert.id} className="hover:bg-slate-900/60 transition-colors">
+                    <tr key={cert.id} className="hover:bg-white/5 transition-colors">
                       <td className="p-4 font-bold text-cyan-300">{cert.certificate_number}</td>
                       <td className="p-4">
                         <div className="font-bold text-white">{cert.program_name}</div>

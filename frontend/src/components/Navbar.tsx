@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
             </nav>
 
             {/* Live Engine Status Indicator */}
-            <div className="hidden sm:flex items-center space-x-2 text-[11px] font-mono-custom px-3.5 py-2 bg-slate-900/90 border border-slate-800 text-slate-400 rounded-xl">
+            <div className="hidden sm:flex items-center space-x-2 text-[11px] font-mono-custom px-3.5 py-2 bg-glass-input border border-glass text-slate-400 rounded-xl">
               <Activity className="w-3.5 h-3.5 text-emerald-400" />
               <span>Engine:</span>
               <span className="text-emerald-400 font-bold flex items-center">

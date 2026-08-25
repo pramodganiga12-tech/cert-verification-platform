@@ -42,24 +42,24 @@ export const AuditTrailAccordion: React.FC<AuditTrailAccordionProps> = ({ steps 
   const warningCount = steps.filter((s) => s.status === 'WARNING').length;
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl backdrop-blur-xl">
+    <div className="w-full max-w-4xl mx-auto bg-glass-card border border-glass rounded-3xl p-6 shadow-2xl backdrop-blur-xl">
       {/* Header Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-2 hover:bg-slate-800/30 rounded-2xl transition-all"
+        className="w-full flex items-center justify-between p-2 hover:bg-white/5 rounded-2xl transition-all"
       >
         <div className="flex items-center space-x-3">
-          <div className="p-2.5 bg-sky-500/10 text-sky-400 rounded-xl border border-sky-500/20">
+          <div className="p-2.5 bg-cyan-500/10 text-cyan-400 rounded-xl border border-cyan-500/20">
             <ListChecks className="w-5 h-5" />
           </div>
           <div className="text-left">
-            <h3 className="text-base font-bold text-slate-100 flex items-center space-x-2">
+            <h3 className="text-base font-bold text-slate-100 flex items-center space-x-2 font-heading">
               <span>Cryptographic Audit & Diagnostic Pipeline</span>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono border border-slate-700 font-normal">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-glass-input text-slate-400 font-mono border border-glass font-normal">
                 {steps.length} Executed Steps
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-400 font-mono">
               12-Step Reasoning Engine Audit Breakdown ({passedCount} Passed • {failedCount} Failed • {warningCount} Warnings)
             </p>
           </div>
@@ -72,11 +72,11 @@ export const AuditTrailAccordion: React.FC<AuditTrailAccordionProps> = ({ steps 
 
       {/* Accordion Content */}
       {isOpen && (
-        <div className="mt-6 pt-6 border-t border-slate-800 space-y-3">
+        <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="flex items-start justify-between p-4 bg-slate-950/70 border border-slate-800/80 rounded-2xl transition-all hover:border-slate-700/80 gap-4"
+              className="flex items-start justify-between p-4 bg-glass-input border border-glass rounded-2xl transition-all hover:border-cyan-500/30 gap-4"
             >
               <div className="flex items-start space-x-3">
                 <div className="mt-0.5">{getStepIcon(step.status)}</div>

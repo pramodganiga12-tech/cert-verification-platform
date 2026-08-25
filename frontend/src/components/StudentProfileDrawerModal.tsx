@@ -117,14 +117,14 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-end bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-        <div className="w-full max-w-2xl bg-slate-900 border-l border-slate-800 h-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-y-auto font-sans flex flex-col justify-between">
+      <div className="fixed inset-0 z-50 flex items-center justify-end bg-[#05070d]/70 backdrop-blur-xl animate-in fade-in duration-200">
+        <div className="w-full max-w-2xl bg-glass-sidebar border-l border-glass h-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-y-auto font-sans flex flex-col justify-between">
           
           <div className="space-y-6">
             {/* Drawer Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex items-center space-x-3">
-                <div className="p-3 bg-gradient-to-tr from-sky-500 via-indigo-500 to-teal-400 rounded-2xl text-white shadow-lg shadow-sky-500/20">
+                <div className="p-3 bg-gradient-to-tr from-cyan-500 via-sky-500 to-violet-600 rounded-2xl text-white shadow-lg shadow-cyan-500/20">
                   <User className="w-6 h-6" />
                 </div>
                 <div>
@@ -139,7 +139,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
             </div>
 
             {/* Profile Overview Card */}
-            <div className="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
+            <div className="p-4 bg-glass-card border border-glass rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
               <div>
                 <span className="text-[10px] text-slate-500 uppercase font-semibold block">Email Address</span>
                 <span className="text-slate-200 font-medium truncate block">{student.email}</span>
@@ -164,7 +164,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
 
                 <button
                   onClick={() => setIsIssueModalOpen(true)}
-                  className="px-3 py-1.5 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-[11px] rounded-xl shadow-lg flex items-center space-x-1.5 transition-all"
+                  className="px-3 py-1.5 btn-futuristic text-[11px] rounded-xl flex items-center space-x-1.5 transition-all"
                 >
                   <PlusCircle className="w-3.5 h-3.5" />
                   <span>Issue New Certificate</span>
@@ -193,7 +193,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
                   {certificates.map((cert) => (
                     <div
                       key={cert.id}
-                      className="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl space-y-2 hover:border-slate-700 transition-all"
+                      className="p-4 bg-glass-card border border-glass rounded-2xl space-y-2 hover:border-cyan-500/20 transition-all"
                     >
                       <div className="flex items-center justify-between">
                         <div>
@@ -241,7 +241,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
             </div>
 
             {/* Upload PDF Documents & Records Section */}
-            <div className="space-y-3 pt-4 border-t border-slate-800">
+            <div className="space-y-3 pt-4 border-t border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2 text-sm font-bold text-slate-200">
                   <FileUp className="w-4 h-4 text-sky-400" />
@@ -250,7 +250,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
               </div>
 
               {/* Upload Dropzone */}
-              <div className="p-4 bg-slate-950 border-2 border-dashed border-slate-800 hover:border-sky-500/50 rounded-2xl transition-all text-center relative group">
+              <div className="p-4 bg-glass-input border-2 border-dashed border-glass hover:border-cyan-500/50 rounded-2xl transition-all text-center relative group">
                 <input
                   type="file"
                   accept="application/pdf"
@@ -284,7 +284,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
                   {documents.map((doc) => (
                     <div
                       key={doc.id}
-                      className="p-3 bg-slate-950/80 border border-slate-800 rounded-xl flex items-center justify-between text-xs font-mono"
+                      className="p-3 bg-glass-card border border-glass rounded-xl flex items-center justify-between text-xs font-mono"
                     >
                       <div className="flex items-center space-x-3 truncate">
                         <FileText className="w-4 h-4 text-sky-400 shrink-0" />
@@ -305,7 +305,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
 
           </div>
 
-          <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
+          <div className="pt-6 border-t border-white/10 flex items-center justify-between">
             {onDeleteRequest && (
               <button
                 onClick={() => {
@@ -319,7 +319,7 @@ export const StudentProfileDrawerModal: React.FC<StudentProfileDrawerModalProps>
 
             <button
               onClick={onClose}
-              className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl"
+              className="px-5 py-2.5 btn-glass text-slate-300 font-semibold text-xs rounded-xl"
             >
               Close Profile
             </button>

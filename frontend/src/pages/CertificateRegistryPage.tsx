@@ -80,7 +80,7 @@ export const CertificateRegistryPage: React.FC = () => {
           <div className="flex items-center space-x-3 shrink-0">
             <button
               onClick={() => setIsMassIssuanceOpen(true)}
-              className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold rounded-xl flex items-center space-x-2 transition-all"
+              className="px-4 py-2.5 btn-glass text-slate-200 text-xs font-semibold rounded-xl flex items-center space-x-2 transition-all"
             >
               <Archive className="w-4 h-4 text-sky-400" />
               <span>Mass Batch Issuance</span>
@@ -88,7 +88,7 @@ export const CertificateRegistryPage: React.FC = () => {
 
             <button
               onClick={() => setIsIssueModalOpen(true)}
-              className="px-4 py-2.5 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-500/20 flex items-center space-x-2 transition-all"
+              className="px-4 py-2.5 btn-futuristic text-xs rounded-xl flex items-center space-x-2 transition-all"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Issue New Certificate</span>
@@ -104,7 +104,7 @@ export const CertificateRegistryPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by Cert Number, Program, or Canonical Hash..."
-              className="w-full bg-slate-900 border border-slate-800 focus:border-sky-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-100 placeholder-slate-500"
+              className="w-full bg-glass-input border border-glass focus:border-cyan-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-100 placeholder-slate-500"
             />
             <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500 pointer-events-none" />
           </div>
@@ -112,7 +112,7 @@ export const CertificateRegistryPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="bg-slate-900 border border-slate-800 focus:border-sky-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 font-medium"
+            className="bg-glass-input border border-glass focus:border-cyan-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 font-medium"
           >
             <option value="ALL">All Statuses</option>
             <option value="ISSUED">ISSUED Only</option>
@@ -129,7 +129,7 @@ export const CertificateRegistryPage: React.FC = () => {
         </div>
 
         {/* Datatable */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+        <div className="bg-glass-card border border-glass rounded-3xl p-6 shadow-2xl glow-cyan">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -230,8 +230,8 @@ export const CertificateRegistryPage: React.FC = () => {
 
         {/* Revocation Confirmation Modal */}
         {selectedRevokeCert && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5 font-sans">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#05070d]/70 backdrop-blur-xl animate-in fade-in duration-200">
+            <div className="w-full max-w-md bg-glass-elevated border border-glass-light rounded-3xl p-6 shadow-2xl space-y-5 font-sans">
               <div className="flex items-center space-x-3 text-rose-400 border-b border-slate-800 pb-3">
                 <ShieldAlert className="w-6 h-6" />
                 <h3 className="text-lg font-bold text-slate-100">Revoke Academic Certificate</h3>

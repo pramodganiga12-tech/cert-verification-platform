@@ -16,12 +16,12 @@ export const CertificatePdfModal: React.FC<CertificatePdfModalProps> = ({ certif
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
-      <div className="w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden font-sans my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#05070d]/70 backdrop-blur-xl animate-in fade-in duration-200 overflow-y-auto">
+      <div className="w-full max-w-4xl bg-glass-elevated border border-glass-light rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden font-sans my-8">
         {/* Action Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4 print:hidden">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4 print:hidden">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 bg-gradient-to-tr from-sky-600 to-indigo-600 rounded-xl text-white">
+            <div className="p-2.5 bg-gradient-to-tr from-cyan-500 via-sky-500 to-violet-600 rounded-xl text-white shadow-lg shadow-cyan-500/20">
               <Award className="w-6 h-6" />
             </div>
             <div>
@@ -33,7 +33,7 @@ export const CertificatePdfModal: React.FC<CertificatePdfModalProps> = ({ certif
           <div className="flex items-center space-x-3">
             <button
               onClick={handlePrint}
-              className="px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-500/20 flex items-center space-x-2 transition-all"
+              className="px-4 py-2 btn-futuristic text-xs rounded-xl flex items-center space-x-2 transition-all"
             >
               <Printer className="w-4 h-4" />
               <span>Print / Download PDF</span>
